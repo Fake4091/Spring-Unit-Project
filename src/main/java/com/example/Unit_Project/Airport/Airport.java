@@ -1,8 +1,11 @@
 package com.example.Unit_Project.Airport;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import com.example.Unit_Project.Plane.Plane;
+
+import java.util.List;
 
 @Entity
 @Table
@@ -25,10 +28,9 @@ public class Airport {
   private double longitude;
   private boolean busy;
 
-//  @ManyToOne
-//  @JoinColumn(name = "plane_id")
-//  private Plane plane;
-
+  @OneToMany(mappedBy = "airport", cascade = CascadeType.ALL)
+  @JsonIgnore
+  private List<Plane> planes;
 
   public Airport() {
   }
@@ -108,5 +110,17 @@ public class Airport {
 
   public void toggleBusy() {
     this.busy = !busy;
+  }
+
+  public List<Plane> getPlanes() {
+    return planes;
+  }
+
+  public void addPlane(Plane plane) {
+    planes.add(plane);
+  }
+
+  public void removePlane(Plane plane) {
+    planes.remove(plane);
   }
 }
