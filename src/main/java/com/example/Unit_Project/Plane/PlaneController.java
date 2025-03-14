@@ -1,7 +1,5 @@
 package com.example.Unit_Project.Plane;
 
-import com.example.Unit_Project.Airport.Airport;
-import org.apache.coyote.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,12 +10,10 @@ import java.util.List;
 public class PlaneController {
     // Getting ahold of repository and service --- ↓
     private final PlaneService planeService;
-    private final PlaneRepository planeRepository;
 
     @Autowired
-    public PlaneController(PlaneService planeService, PlaneRepository planeRepository) {
+    public PlaneController(PlaneService planeService ) {
         this.planeService = planeService;
-        this.planeRepository = planeRepository;
     }
     // Getting ahold of repository and service --- ↑
 
@@ -45,6 +41,18 @@ public class PlaneController {
     @PutMapping("update/{id}")
     public Plane updatePlane(@PathVariable Long id, @RequestBody Plane newPlane) {
         return planeService.updatePlane(id, newPlane);
+    }
+
+    // plane land @ airport ()
+    @PutMapping(path="{planeId}/land/{airportId}")
+    public Plane landPlane(@PathVariable Long planeId, @PathVariable Long airportId) {
+        return planeService.landPlane(planeId, airportId);
+    }
+
+    // plane take off from airport ()
+    @PutMapping(path="{planeId}/takeOff/")
+    public Plane takeOffPlane(@PathVariable Long planeId) {
+        return planeService.takeOff(planeId);
     }
 
     // Delete Data () --- ↓

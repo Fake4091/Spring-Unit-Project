@@ -1,5 +1,6 @@
 package com.example.Unit_Project.Plane;
 
+import com.example.Unit_Project.Airport.Airport;
 import com.example.Unit_Project.Passenger.Passenger;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
@@ -27,6 +28,11 @@ public class Plane {
   @JsonProperty
   private Integer numberOfSeats;
 
+  @ManyToOne
+  @JoinColumn(name = "airport_id", referencedColumnName = "id")
+  @JsonProperty
+  private Airport airport;
+
 //  @OneToMany
 //  private List<Passenger> passengers;
 
@@ -35,10 +41,17 @@ public class Plane {
   public Plane() {
   }
 
-  public Plane(Long id, String model, Integer numberOfSeats) {
+  public Plane(Long id, String model, Integer numberOfSeats, Airport airport) {
     this.id = id;
     this.model = model;
     this.numberOfSeats = numberOfSeats;
+    this.airport = airport;
+  }
+
+  public Plane(String model, Integer numberOfSeats, Airport airport) {
+    this.model = model;
+    this.numberOfSeats = numberOfSeats;
+    this.airport = airport;
   }
 
   public Plane(String model, Integer numberOfSeats) {
@@ -77,4 +90,11 @@ public class Plane {
     return numberOfSeats;
   }
 
+  public Airport getAirport() {
+    return airport;
+  }
+
+  public void setAirport(Airport airport) {
+    this.airport = airport;
+  }
 }
