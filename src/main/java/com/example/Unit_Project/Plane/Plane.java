@@ -2,11 +2,18 @@ package com.example.Unit_Project.Plane;
 
 import com.example.Unit_Project.Airport.Airport;
 import com.example.Unit_Project.Passenger.Passenger;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class Plane {
 
   @Id
@@ -33,8 +40,8 @@ public class Plane {
   @JsonProperty
   private Airport airport;
 
-//  @OneToMany
-//  private List<Passenger> passengers;
+  @OneToMany(mappedBy = "plane")
+  private Set<Passenger> passengers = new HashSet<>();
 
   // Constructors Area ---- ↓
 
@@ -97,4 +104,19 @@ public class Plane {
   public void setAirport(Airport airport) {
     this.airport = airport;
   }
+
+  public void addPassenger(Passenger passenger) {
+    passengers.add(passenger);
+  }
+//  GETTER / SETTER FOR PASSENGERS
+
+  public Set<Passenger> getPassengers() {
+    return passengers;
+  }
+
+  public void setPassengers(Set<Passenger> passengers) {
+    this.passengers = passengers;
+  }
+
+
 }
