@@ -1,10 +1,13 @@
 package com.example.Unit_Project.Passenger;
 
 import com.example.Unit_Project.Plane.Plane;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
 @Entity
 @Table
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class Passenger {
     @Id
     @SequenceGenerator(
@@ -21,18 +24,17 @@ public class Passenger {
     private String name;
     private String phoneNumber;
     private String travelLocation;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "plane_id")
-//    private Plane plane;
-//
+
+    @ManyToOne
+    @JoinColumn(name = "plane_id")
+    private Plane plane;
+
     public Passenger() {}
 
     public Passenger(String name, String phoneNumber, String travelLocation) {
       this.name = name;
       this.phoneNumber = phoneNumber;
       this.travelLocation = travelLocation;
-//      this.plane = plane;
     }
 
     public Long getId() {
@@ -67,11 +69,12 @@ public class Passenger {
       this.travelLocation = travelLocation;
     }
 
-//    public Plane getPlane() {
-//      return plane;
-//    }
-//
-//    public void setPlane(Plane plane) {
-//      this.plane = plane;
-//    }
+    public Plane getPlane() {
+      return plane;
+    }
+
+    public void setPlane(Plane plane) {
+      this.plane = plane;
+    }
+
 }
